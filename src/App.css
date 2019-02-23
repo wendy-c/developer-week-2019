@@ -1,3 +1,12 @@
+button {
+  background-color: #fff;
+  border: 1px solid #282c34;
+  border-radius: 8px;
+  margin: 5px 0;
+  padding: 5px 0;
+  font-size: calc(10px + 2vmin);
+}
+
 .App {
   text-align: center;
 }
@@ -23,11 +32,23 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #F2B824;
+  border: 5px solid #fff;
+  border-radius: 8px;
+  padding: 30px;
 }
+
+.login-form span {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-form h1 {
+  margin: 15px 0;
+}
+
