@@ -2,8 +2,12 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const axios = require('axios');
+var fs = require('fs');
+var https = require('https');
 
 require('dotenv').config();
+
+console.log('keys: ', process.env);
 
 const app = express();
 app.use(cors())
@@ -24,3 +28,11 @@ app.get('/', function (_req, res) {
 
 app.listen(process.env.PORT || 8080, console.log("Listening on port 8080"));
 
+
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app)
+.listen(1989, function () {
+  console.log('HTTPS listening on port 1989! Go to https://localhost:1989/')
+})
