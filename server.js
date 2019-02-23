@@ -2,10 +2,11 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const axios = require('axios');
+const identify = require('./identify');
 
 require('dotenv').config();
 
-console.log('keys: ', process.env);
+identify('');
 
 const app = express();
 app.use(cors())
