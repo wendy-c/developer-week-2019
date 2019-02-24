@@ -120,9 +120,9 @@ const addAdmin = function(images) {
   // combine pos and neg results for admin
   // const allImages = (adminImages.map(i => convertToInput(i, [ADMIN_CONCEPT, NOT_KID_CONCEPT], true))).concat(kidImages.map(i => convertToInput(i, [KID_CONCEPT, NOT_ADMIN_CONCEPT], false)));
   console.log("Number of images to process: " + images.length);
-
+const allImages = images.map(i => convertToInput(i, [ADMIN_CONCEPT, NOT_KID_CONCEPT], true));
   // upload starting images to clarify
-  uploadInputs(images);
+  uploadInputs(allImages);
 }
 
 const identify = (picUrl) => {
