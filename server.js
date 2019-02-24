@@ -6,6 +6,9 @@ var fs = require('fs');
 var https = require('https');
 const u2f = require('u2f');
 const bodyParser = require('body-parser');
+const identify = require('./identify').identify;
+const addAdmin = require('./identify').addAdmin;
+
 
 const docusign = require('docusign-esign');
 const docusignClient = new docusign.ApiClient();
@@ -153,6 +156,11 @@ app.get('/signdoc', function(req, res) {
 
 })
 
+// identify who is currently watching
+app.get('/who/admin', function(req, res) {
+  addAdmin();
+});
+
 app.get('/', function (_req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -173,7 +181,6 @@ app.post('/register', function(req, res, next) {
 });
 
 app.listen(process.env.PORT || 8080, console.log("Listening on port 8080"));
-
 
 https.createServer({
   key: fs.readFileSync('server.key'),
@@ -220,3 +227,4 @@ app.post('/api/register', (req, res) =>{
 app.post('/api/authenticate', (req,res) =>{
 
 });
+
