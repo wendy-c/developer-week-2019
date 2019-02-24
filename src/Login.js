@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import AgoraRTC from 'agora-rtc-sdk';
 
 class Login extends Component {
   state = {
     username: '',
     password: ''
+  }
+
+  componentDidMount() {
+    const client = AgoraRTC.createClient({mode: 'live', codec: "h264"});
+
+    client.init('e98b454d6cf942f792c53ec2d39b79a3', function () {
+      console.log("AgoraRTC client initialized");
+    
+    }, function (err) {
+      console.log("AgoraRTC client init failed", err);
+    });
   }
 
   handleSubmit = event => {
