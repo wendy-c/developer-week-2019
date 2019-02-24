@@ -3,6 +3,7 @@ import {Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
 import {register, sign} from 'u2f-api';
 
+
 // const session = window.sessionStorage;
 
 class Login extends Component {
