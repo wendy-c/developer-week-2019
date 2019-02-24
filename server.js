@@ -18,6 +18,7 @@ require('dotenv').config();
 const app = express();
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'build')));
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -28,6 +29,7 @@ app.get('/getdata', async (req, res) => {
 });
 
 app.post('/facepassport', (req, res) => {
+  console.log(req.body);
   res.send(req.body);
 });
 
