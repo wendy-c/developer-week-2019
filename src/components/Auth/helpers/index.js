@@ -56,11 +56,11 @@ function createCameraStream(uid) {
   });
 }
 
-export function takepicture(video) {
+export function takepicture() {
     var context = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
-    context.drawImage(video, 0, 0, width, height);
+    context.drawImage(vid, 0, 0, width, height);
 
     var data = canvas.toDataURL('image/jpeg');
     photo.setAttribute('src', data, 'style', { 'height': 500, 'width': 500 });
