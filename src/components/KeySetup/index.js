@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 
 class KeySetup extends Component {
+
   handleClick = event => {
-    // TODO: api call to set up yubico here
+    axios.get('https://localhost:1989/api/register_req').then(response =>{
+      console.log('click res: ', response.data);
+      register(response.data).then(res=> {
+        console.log('work', res);
+        axios.post('https://localhost:1989/api/register', res).then(res=> {
+          console.log('w', res);
+          if(res){
+            alert('Registration Success!');
+          }else{
+            alert(res);
+          }
+        }).catch(err=>{
+          console.log(err);
+        });
+        }).catch(err=>{
+          console.log(err);
+          console.log('register err');
+        });
+      });
   }
 
   render() {
