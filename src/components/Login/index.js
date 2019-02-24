@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-// import Auth from './Auth';
 
 class Login extends Component {
   state = {
@@ -28,7 +27,6 @@ class Login extends Component {
           <label>
             Email <input name="username" value={this.state.username} onChange={this.handleChange}/>
           </label>
-          {/* <Auth /> */}
           <label>
           Password <input name="password" value={this.state.password} onChange={this.handleChange}/>
           </label>
