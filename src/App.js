@@ -7,6 +7,7 @@ import Signup from './Signup';
 import KeySetup from './KeySetup';
 import Auth from './Auth'
 import Dashboard from './Dashboard';
+import WhiteList from './WhiteList';
 
 class App extends Component {
 
@@ -19,6 +20,7 @@ class App extends Component {
         <Route path="/keysetup/:name/:email" exact component={KeySetup}/>
         <Route path="/facepassport" exact component={Auth}/>
         <Route path="/dashboard" exact component={Dashboard}/>
+        <Route path="/whitelist" exact component={WhiteList}/>
       </Switch>
       </BrowserRouter>  
     );
