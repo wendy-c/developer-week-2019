@@ -29,7 +29,8 @@ app.get('/getdata', async (req, res) => {
 });
 
 app.post('/facepassport', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
+  // TODO - Need to do something with the base64 image
   res.send(req.body);
 });
 

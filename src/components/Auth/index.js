@@ -26,12 +26,11 @@ export default class Auth extends Component {
 
     handleClick = event => {
         const base64 = takepicture();
-        console.log(base64);
+        // console.log(JSON.stringify(encodeURIComponent(base64)));
         axios({
             method: 'post',
             url: 'http://localhost:8080/facepassport',
-            data: JSON.stringify(base64),
-            headers: { 'Content-Type': 'multipart/form-data' }
+            data: JSON.stringify(encodeURIComponent(base64))
         }).then(done => {
             this.setState({done: true});
         });
