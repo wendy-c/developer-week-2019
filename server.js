@@ -137,7 +137,7 @@ app.get('/signdoc', function(req, res) {
     recipientViewRequest.authenticationMethod = 'email';
     recipientViewRequest.clientUserId = '123';
     recipientViewRequest.recipientId = '1';
-    recipientViewRequest.returnUrl = `http://localhost:3000/keysetup/${recipientName}/${recipientEmail}`;
+    recipientViewRequest.returnUrl = `http://localhost:3000/facepassport/signup`;
     recipientViewRequest.userName = recipientName;
     recipientViewRequest.email = recipientEmail;
 

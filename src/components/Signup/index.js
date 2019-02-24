@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import {Redirect} from 'react-router-dom';
+import axios from 'axios';
+import {register} from 'u2f-api';
 
 class Signup extends Component {
   state = {
@@ -13,10 +16,34 @@ class Signup extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleSubmit = event => {
+    this.setState({redirect: true})
+    
+    axios.get('https://localhost:1989/api/register_req').then(response =>{
+      console.log('click res: ', response.data);
+      register(response.data).then(res=> {
+        console.log('work', res);
+        axios.post('https://localhost:1989/api/register', res).then(res=> {
+          console.log('w', res);
+          if(res){
+            alert('Registration Success!');
+          }else{
+            alert(res);
+          }
+        }).catch(err=>{
+          console.log(err);
+        });
+        }).catch(err=>{
+          console.log(err);
+          console.log('register err');
+        });
+      });
+  }
+
   render() {
-    const actionUrl = `${process.env.REACT_APP_API_URL}/register?name=${
-      this.state.name
-    }&email=${this.state.email}`;
+    if (this.state.redirect) {
+      return <Redirect to={`/keysetup/${this.state.name}/${this.state.email}`} />
+    }
     return (
       <div className="page-header">
         <div className="signup-form">
@@ -24,7 +51,7 @@ class Signup extends Component {
             <h1 style={{ color: "red" }}>{this.state.error}</h1>
           )}
           <h1>Sign up with RoboSitter</h1>
-          <form method="post" action={actionUrl}>
+          <form onSubmit={this.handleSubmit}>
             <label>
               Full Name{" "}
               <input
@@ -57,7 +84,7 @@ class Signup extends Component {
                 onChange={this.handleChange}
               />
             </label>
-            <button>Submit</button>
+            <button>Set up key</button>
           </form>
         </div>
       </div>
