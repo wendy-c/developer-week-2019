@@ -59,6 +59,7 @@ export default function Auth(props) {
   
     return (
         <div className="Auth">
+            <h3>Time to set up your face passport</h3>
             <div id='camera'/>
         </div>  
     );

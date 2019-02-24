@@ -5,6 +5,7 @@ button {
   margin: 5px 0;
   padding: 5px 0;
   font-size: calc(10px + 2vmin);
+  cursor: pointer;
 }
 
 .App {
@@ -53,6 +54,20 @@ button {
 
 .login-form h1 {
   margin: 15px 0;
+}
+
+.login-form input {
+  width: 300px;
+  margin-left: 10px;
+}
+
+.App-header a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.App-header a:hover {
+  color: #F2B824;
 }
 
 .signup-form {
