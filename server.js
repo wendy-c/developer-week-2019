@@ -4,6 +4,8 @@ const cors = require('cors');
 const axios = require('axios');
 var fs = require('fs');
 var https = require('https');
+const u2f = require('u2f');
+const bodyParser = require('body-parser');
 
 const docusign = require('docusign-esign');
 const docusignClient = new docusign.ApiClient();
@@ -13,6 +15,9 @@ require('dotenv').config();
 const app = express();
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'build')));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.enable('trust proxy')
 
@@ -177,3 +182,41 @@ https.createServer({
 .listen(1989, function () {
   console.log('HTTPS listening on port 1989! Go to https://localhost:1989/')
 })
+
+var users = {};
+var sessions = {};
+
+const APP_ID = 'https://localhost:1989';
+app.get('/api/register_req',(req, res)=>{
+  var authRequest = u2f.request(APP_ID);
+  var session = JSON.stringify(authRequest);
+  app.set('session', session);
+  res.send(session);
+});
+
+app.get('/api/sign_req', (req, res)=>{
+  var authRequest = u2f.request(APP_ID, Users[0].keyHandle);
+  // Sessions[req.cookies.userid] = { authRequest: authRequest };
+  res.send(JSON.stringify(authRequest));
+});
+
+app.post('/api/register', (req, res) =>{
+  console.log(req.body);
+  console.log(req.query);
+  console.log(req.data);
+  console.log(res.body);
+  console.log(res.query);
+  console.log(res.data);
+
+  var registration = u2f.checkRegistration(JSON.parse(app.get("session")), req.body.registrationResponse);
+  if(!registration.successful) {
+    console.log(registration.errorMessage);
+    return res.status(500).send({ message: "error" });
+  }
+  res.send(registration);
+});
+
+
+app.post('/api/authenticate', (req,res) =>{
+
+});
