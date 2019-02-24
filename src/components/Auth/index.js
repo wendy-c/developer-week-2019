@@ -16,19 +16,25 @@ export default class Auth extends Component {
     }
     componentDidMount() {
         initClientAndJoinChannel(appID, channel);
-        createBase64Arr(base64 => {
-            this.setState({
-                base64Arr: encodeURIComponent(base64),
-                picCount: this.state.picCount + 1
-            });
-        }, Auth.signup);
+        // createBase64Arr(base64 => {
+        //     this.setState({
+        //         base64Arr: encodeURIComponent(base64),
+        //         picCount: this.state.picCount + 1
+        //     });
+        // }, Auth.signup);
     }
 
     handleClick = event => {
-        
-        setTimeout(() => {
-            this.setState({done: true})
-        }, 3000);
+        const base64 = takepicture();
+        console.log(base64);
+        axios({
+            method: 'post',
+            url: 'http://localhost:8080/facepassport',
+            data: JSON.stringify(base64)
+            // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).then(done => {
+            this.setState({done: true});
+        });
     }
 
     handleNext = event => {
@@ -46,18 +52,13 @@ export default class Auth extends Component {
         });
     }
 
-    // handleClick(e) {
-    //     e.preventDefault();
-    //     takepicture()
-
-    // }
     render() {
         if (this.state.redirect) {
             return <Redirect to="/dashboard"/>
         }
         return (
             <div className="page-header">
-                <h3 onClick={this.handleClick}>Time to set up your face passport</h3>
+                <h3>Time to set up your face passport</h3>
                 <div id='camera'/>
                 {!this.state.done && <button onClick={this.handleClick} style={{padding: '5px 10px'}}><i className="fas fa-video"></i> Capture</button>}
                 {this.state.done && <h3>DONE!</h3>}
