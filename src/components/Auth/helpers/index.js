@@ -66,12 +66,12 @@ function takepicture(video) {
     return data;
 }
 
-export function createBase64Arr(cb) {
+export function createBase64Arr(cb, picCount) {
     setTimeout(() => {
         let count = 0;
         const interval = setInterval(() => {
             count += 1;
-            if (count === 10) {
+            if (count === picCount) {
                 clearInterval(interval);
             }
             cb(takepicture(vid));
