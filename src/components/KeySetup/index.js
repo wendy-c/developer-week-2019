@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 class KeySetup extends Component {
+  state = {
+    redirect: false
+  }
+
   handleClick = event => {
     // TODO: api call to set up yubico here
+    this.state.setState({redirect: true})
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/facepassport/signup" />
+    }
     return (
       <div className="page-header">
         <div className="page-header__container">

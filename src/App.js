@@ -18,7 +18,7 @@ class App extends Component {
         <Route path="/" exact component={Login}/>
         <Route path="/signup" exact component={Signup}/>
         <Route path="/keysetup/:name/:email" exact component={KeySetup}/>
-        <Route path="/facepassport" exact component={Auth}/>
+        <Route path="/facepassport/:type" exact component={Auth}/>
         <Route path="/dashboard" exact component={Dashboard}/>
         <Route path="/whitelist" exact component={WhiteList}/>
       </Switch>
