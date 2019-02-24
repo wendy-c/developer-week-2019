@@ -8,8 +8,7 @@ const u2f = require('u2f');
 const bodyParser = require('body-parser');
 const identify = require('./identify').identify;
 const addAdmin = require('./identify').addAdmin;
-
-
+const adult = require("./adult.json");
 const docusign = require('docusign-esign');
 const docusignClient = new docusign.ApiClient();
 
@@ -163,9 +162,31 @@ app.get('/signdoc', function(req, res) {
 
 })
 
-// identify who is currently watching
+let images = [];
+
+app.post('/facepassport', function(req,res) {
+  console.log(req.body);
+  res.send(req.body);
+  if (images.length === 5) {
+    redirect('/who/admin');
+  } else {
+    const image = req.body;
+    images.push(image);
+  }
+})
+
+// add admin to system
 app.get('/who/admin', function(req, res) {
-  addAdmin();
+  addAdmin(images);
+});
+
+app.get('/who/you', function(req, res) {
+  console.log("identifying..."); 
+  const kid = "https://www.healthykids.org/_img2017/kid05.jpg";
+  // kid
+  identify(kid);
+  // adult
+  // identify(adult);
 });
 
 app.get('/', function (_req, res) {
