@@ -21,7 +21,6 @@ export default class Auth extends Component {
     }
 
     render() {
-        console.log(this.state.base64Arr);
         return (
             <div className="Auth">
                 <h3 onClick={this.handleClick}>Time to set up your face passport</h3>
