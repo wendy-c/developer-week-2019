@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
-const currentWhitelistStub = [
+import { localStorage } from '../../App';
+
+export const currentWhitelistStub = [
   {label: 'Baby Shark Dance | Sing and Dance! | Animal Songs | PINKFONG Songs for Children', url: 'https://www.youtube.com/watch?v=XqZsoesa55w'},
   {label: 'Sesame Street: If You\'re Happy and You Know It | Elmo\'s Sing-Along', url: 'https://www.youtube.com/watch?v=5015skRvqs8'},
   {label: 'If You’re Happy and You Know It + More Baby Songs by Dave and Ava', url: 'https://www.youtube.com/watch?v=WbUP2PO9gFI'}
 ]
+
 
 class Dashboard extends Component {
   state = {
@@ -19,6 +22,7 @@ class Dashboard extends Component {
   handleRemove = (key) => {
     const listLength = this.state.whiteList.length;
     const newList = [...this.state.whiteList.slice(0, key), ...this.state.whiteList.slice(key + 1, listLength)];
+
     this.setState({whiteList: newList});
     
   }
@@ -26,7 +30,7 @@ class Dashboard extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const newList = [...this.state.whiteList, this.state.value];
-    
+    localStorage.setItem("robositter-whitelist", JSON.stringify(newList));
     this.setState({whiteList: newList, value: ''});
   }
 

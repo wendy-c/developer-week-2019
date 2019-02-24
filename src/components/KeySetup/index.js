@@ -8,7 +8,7 @@ class KeySetup extends Component {
 
   handleClick = event => {
     // TODO: api call to set up yubico here
-    this.state.setState({redirect: true})
+    this.setState({redirect: true})
   }
 
   render() {
@@ -25,7 +25,7 @@ class KeySetup extends Component {
             Your Email: <b>{this.props.match.params.email}</b>
           </span>
           <h3>Now, it's time to set up your key.</h3>
-          <button handleClick={this.handleClick}>Set up key</button>
+          <button onClick={this.handleClick}>Set up key</button>
         </div>
       </div>
     )
