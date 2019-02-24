@@ -30,8 +30,8 @@ export default class Auth extends Component {
         axios({
             method: 'post',
             url: 'http://localhost:8080/facepassport',
-            data: JSON.stringify(base64)
-            // headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            data: JSON.stringify(base64),
+            headers: { 'Content-Type': 'multipart/form-data' }
         }).then(done => {
             this.setState({done: true});
         });
@@ -41,16 +41,16 @@ export default class Auth extends Component {
         this.setState({redirect: true})
     }
 
-    componentDidUpdate() {
-        const { base64Arr } = this.state;
-        console.log(base64Arr);
-        axios({
-            method: 'post',
-            url: 'http://localhost:8080/facepassport',
-            data: JSON.stringify(base64Arr),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-    }
+    // componentDidUpdate() {
+    //     const { base64Arr } = this.state;
+    //     console.log(base64Arr);
+    //     axios({
+    //         method: 'post',
+    //         url: 'http://localhost:8080/facepassport',
+    //         data: JSON.stringify(base64Arr),
+    //         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    //     });
+    // }
 
     render() {
         if (this.state.redirect) {
