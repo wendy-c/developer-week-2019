@@ -152,7 +152,7 @@ app.get('/signdoc', function(req, res) {
 
 // identify who is currently watching
 app.get('/who/admin', function(req, res) {
-  addAdmin('./data.json');
+  addAdmin();
 });
 
 app.get('/', function (_req, res) {
