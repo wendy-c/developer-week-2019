@@ -10788,6 +10788,16 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
+u2f-api@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/u2f-api/-/u2f-api-1.0.10.tgz#38d898a72daa6362040b27e37c8286d96cb8d320"
+  integrity sha512-0Zh+IqM2l6xaA/IUJDT9WwoEM6nwPx6ive4flVVYEfzzgXIrKFRaenieItsEkbXIgOZEw13nO3o3oLtSDOyesA==
+
+u2f@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/u2f/-/u2f-0.1.3.tgz#a13afabe73fe8c67a4c2efe34dc866409e6d241b"
+  integrity sha512-/IaxeBqjo5o3D7plPkxdApbCpgGoI2bmTomS1kq5OjVflaE9UBJ0WfqoXqZryZKfFYBjQC7Tn1hA57WtRgh/Sg==
+
 uglify-js@3.4.x, uglify-js@^3.1.4:
   version "3.4.9"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.4.9.tgz#af02f180c1207d76432e473ed24a28f4a782bae3"
