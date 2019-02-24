@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+import {register, sign} from 'u2f-api';
 
 class Login extends Component {
   state = {
@@ -17,6 +19,28 @@ class Login extends Component {
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value})
   }
+  handleClick = event => {
+    axios.get('https://localhost:1989/api/register_req').then(response =>{
+      console.log('click res: ', response.data);
+      register(response.data).then(res=> {
+        console.log('work', res);
+        var result = res;
+        axios.post('https://localhost:1989/api/register', result).then(res=> {
+          console.log('w', res);
+          if(res){
+            alert('success');
+          }else{
+            alert(res);
+          }
+        }).catch(err=>{
+          console.log(err);
+        });
+        }).catch(err=>{
+          console.log(err);
+          console.log('register err');
+        });
+      });
+  }
 
   render() {
     return (
@@ -30,7 +54,7 @@ class Login extends Component {
           <label>
           Password <input name="password" value={this.state.password} onChange={this.handleChange}/>
           </label>
-          <button>Login</button>
+          <button onClick={this.handleClick}>Login</button>
         </form>
         or <Link to="/signup">Signup</Link>
         </header>
