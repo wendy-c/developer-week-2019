@@ -55,17 +55,13 @@ function createCameraStream(uid) {
   });
 }
 
-export default class Auth extends Component {
-    componentDidMount() {
-      initClientAndJoinChannel(appID, channel);
-    }
+export default function Auth(props) {
+    initClientAndJoinChannel(appID, channel);
   
-    render() {
-      return (
+    return (
         <div className="Auth">
             <div id='camera'/>
         </div>  
-      );
-    }
+    );
   }
   
