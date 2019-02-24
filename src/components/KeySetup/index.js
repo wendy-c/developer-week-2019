@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
+import {register} from 'u2f-api';
 
 class KeySetup extends Component {
 
+  state = {
+    redirect: false
+}
   handleClick = event => {
+    this.state.setState({redirect: true})
     axios.get('https://localhost:1989/api/register_req').then(response =>{
       console.log('click res: ', response.data);
       register(response.data).then(res=> {
@@ -22,9 +29,15 @@ class KeySetup extends Component {
           console.log('register err');
         });
       });
-  }
+    }
+
+
+
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/facepassport/signup" />
+    }
     return (
       <div className="page-header">
         <div className="page-header__container">
