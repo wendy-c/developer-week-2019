@@ -26,7 +26,7 @@ class Dashboard extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const newList = [...this.state.whiteList, this.state.value];
-    console.log("new List>", newList)
+    
     this.setState({whiteList: newList, value: ''});
   }
 

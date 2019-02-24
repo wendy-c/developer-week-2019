@@ -9,30 +9,6 @@ class Signup extends Component {
     error: ""
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    // TODO: Create new user in the server
-
-    // **** code for Docusign *****
-    const { fullname, email, password, confirmPassword } = this.state;
-
-    if (password !== confirmPassword) {
-      this.setState({ error: "Password does not match!" });
-      return;
-    }
-
-    if (!fullname || !password || !email) {
-      this.setState({ error: "All fields must be filled in!" });
-      return;
-    }
-
-    fetch(
-      `${process.env.REACT_APP_API_URL}/signdoc?name=${fullname}&email=${email}`
-    ).then(res => {
-      console.log("success!");
-    });
-  };
-
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
