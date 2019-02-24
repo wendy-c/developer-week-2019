@@ -28,7 +28,7 @@ class Login extends Component {
   handleAuth= event=> {
     axios.get('https://localhost:1989/api/sign_req').then(res=>{
       console.log('returned', res.data)
-      sign([res.data]).then(res=>{
+      sign(res.data).then(res=>{
           console.log('init', res);
           axios.post('https://localhost:1989/api/authenticate', res).then(res=> {
             if(res.data){
@@ -64,7 +64,6 @@ class Login extends Component {
           </label>
           <button onClick={this.handleSubmit}>Login</button>
         </form>
-        <button onClick={this.handleAuth}>Key Login</button>
         or <Link to="/signup">Signup</Link>
         </header>
       </div>  
