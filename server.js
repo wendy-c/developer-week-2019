@@ -209,13 +209,13 @@ app.get('/api/register_req',(req, res)=>{
 
 app.get('/api/sign_req', (req, res)=>{
   var authRequest = u2f.request(APP_ID, users[0].keyHandle);
-  sessions[0] = { authRequest: authRequest };
+  app.set('session', authRequest);
   res.send(JSON.stringify(authRequest));
 });
 
 app.post('/api/register', (req, res) =>{
-  console.log(req.body)
-  var registration = u2f.checkRegistration(app.get('session'), req.body);
+  // console.log(req.body)
+  var registration = u2f.checkRegistration(app.set('session'), req.body);
   console.log(registration);
   if(!registration.successful) {
     console.log(registration.errorMessage);
@@ -228,6 +228,13 @@ app.post('/api/register', (req, res) =>{
 
 
 app.post('/api/authenticate', (req,res) =>{
+  var publicKey = users[0].publicKey;
+  var result = u2f.checkSignature(app.get('session'), req.body.authResponse, publicKey);
+  if(result.successful){
+    return sendStatus(200);
+  } else {
+    return res.send({result});
+  }
 
 });
 
