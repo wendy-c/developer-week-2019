@@ -9,7 +9,9 @@ class KeySetup extends Component {
     redirect: false
 }
   handleClick = event => {
-    this.state.setState({redirect: true})
+    // TODO: api call to set up yubico here
+    this.setState({redirect: true})
+    
     axios.get('https://localhost:1989/api/register_req').then(response =>{
       console.log('click res: ', response.data);
       register(response.data).then(res=> {

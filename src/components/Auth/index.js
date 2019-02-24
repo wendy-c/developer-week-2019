@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { initClientAndJoinChannel, createBase64Arr, takepicture } from './helpers';
 import { appID, channel } from './constants';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 export default class Auth extends Component {
@@ -8,6 +9,8 @@ export default class Auth extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            done: false,
+            redirect: false,
             base64Arr: null
         };
     }
@@ -19,6 +22,17 @@ export default class Auth extends Component {
                 picCount: this.state.picCount + 1
             });
         }, Auth.signup);
+    }
+
+    handleClick = event => {
+        
+        setTimeout(() => {
+            this.setState({done: true})
+        }, 3000);
+    }
+
+    handleNext = event => {
+        this.setState({redirect: true})
     }
 
     componentDidUpdate() {
@@ -38,10 +52,16 @@ export default class Auth extends Component {
 
     // }
     render() {
+        if (this.state.redirect) {
+            return <Redirect to="/dashboard"/>
+        }
         return (
-            <div className="Auth">
-                <h3>Time to set up your face passport</h3>
+            <div className="page-header">
+                <h3 onClick={this.handleClick}>Time to set up your face passport</h3>
                 <div id='camera'/>
+                {!this.state.done && <button onClick={this.handleClick} style={{padding: '5px 10px'}}><i className="fas fa-video"></i> Capture</button>}
+                {this.state.done && <h3>DONE!</h3>}
+                {this.state.done && <button onClick={this.handleNext} style={{padding: '5px 10px'}}>Next</button>}
             </div>  
         );   
     }
