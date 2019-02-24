@@ -1,31 +1,26 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 
 class KeySetup extends Component {
-  state = {
-    redirect: false
-  }
-
-  handleClick = event => {
-    // TODO: api call to set up yubico here
-    this.state.setState({redirect: true})
-  }
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect to="/facepassport/signup" />
-    }
+
+    const actionUrl = `${process.env.REACT_APP_API_URL}/register?name=${
+      this.props.match.params.name
+    }&email=${this.props.match.params.email}`;
     return (
       <div className="page-header">
         <div className="page-header__container">
+        <h3>Your registered account details</h3>
           <span>
             Your Name: <b>{this.props.match.params.name}</b>
           </span>
           <span>
             Your Email: <b>{this.props.match.params.email}</b>
           </span>
-          <h3>Now, it's time to set up your key.</h3>
-          <button handleClick={this.handleClick}>Set up key</button>
+          
+          <form style={{textAlign: 'center'}} method="post" action={actionUrl}>
+          <button style={{padding: '5px 10px', marginTop: '25px'}}>Sign waiver</button>
+          </form>
         </div>
       </div>
     )

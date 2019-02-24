@@ -6,10 +6,15 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import KeySetup from './components/KeySetup';
 import Auth from './components/Auth'
-import Dashboard from './components/Dashboard';
+import Dashboard, {currentWhitelistStub} from './components/Dashboard';
 import WhiteList from './components/WhiteList';
 
+export const localStorage = window.localStorage;
+
 class App extends Component {
+  componentDidMount() {
+    localStorage.setItem("robositter-whitelist", JSON.stringify(currentWhitelistStub));
+  }
 
   render() {
     return (

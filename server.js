@@ -131,7 +131,7 @@ app.get('/signdoc', function(req, res) {
     recipientViewRequest.authenticationMethod = 'email';
     recipientViewRequest.clientUserId = '123';
     recipientViewRequest.recipientId = '1';
-    recipientViewRequest.returnUrl = `http://localhost:3000/keysetup/${recipientName}/${recipientEmail}`;
+    recipientViewRequest.returnUrl = `http://localhost:3000/facepassport/signup`;
     recipientViewRequest.userName = recipientName;
     recipientViewRequest.email = recipientEmail;
 
@@ -212,41 +212,45 @@ https.createServer({
   console.log('HTTPS listening on port 1989! Go to https://localhost:1989/')
 })
 
-var users = {};
-var sessions = {};
+var users = [{}];
+var sessions = [{}];
 
 const APP_ID = 'https://localhost:1989';
 app.get('/api/register_req',(req, res)=>{
   var authRequest = u2f.request(APP_ID);
-  var session = JSON.stringify(authRequest);
+  var session = authRequest;
   app.set('session', session);
   res.send(session);
 });
 
 app.get('/api/sign_req', (req, res)=>{
-  var authRequest = u2f.request(APP_ID, Users[0].keyHandle);
-  // Sessions[req.cookies.userid] = { authRequest: authRequest };
+  var authRequest = u2f.request(APP_ID, users[0].keyHandle);
+  app.set('session', authRequest);
   res.send(JSON.stringify(authRequest));
 });
 
 app.post('/api/register', (req, res) =>{
-  console.log(req.body);
-  console.log(req.query);
-  console.log(req.data);
-  console.log(res.body);
-  console.log(res.query);
-  console.log(res.data);
-
-  var registration = u2f.checkRegistration(JSON.parse(app.get("session")), req.body.registrationResponse);
+  // console.log(req.body)
+  var registration = u2f.checkRegistration(app.set('session'), req.body);
+  console.log(registration);
   if(!registration.successful) {
     console.log(registration.errorMessage);
     return res.status(500).send({ message: "error" });
   }
+  users[0].publicKey= res.publicKey;
+  users[0].keyHandle = res.keyHandle;
   res.send(registration);
 });
 
 
 app.post('/api/authenticate', (req,res) =>{
+  var publicKey = users[0].publicKey;
+  var result = u2f.checkSignature(app.get('session'), req.body.authResponse, publicKey);
+  if(result.successful){
+    return sendStatus(200);
+  } else {
+    return res.send({result});
+  }
 
 });
 
