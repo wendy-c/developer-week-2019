@@ -31,6 +31,11 @@ export default class Auth extends Component {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
     }
+
+    handleClick(e) {
+        e.preventDefault();
+        
+    }
     render() {
         return (
             <div className="Auth">
