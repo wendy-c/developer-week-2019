@@ -1,6 +1,7 @@
 const Clarifai = require('clarifai');
 const fs = require('fs');
 const kidImages = require('./kid_data.json');
+const axios = require('axios');
 // get API key
 require('dotenv').config();
 const KEY = process.env.CLARIFAI_API_KEY;
@@ -114,30 +115,38 @@ const uploadInputs = function(inputs) {
 }
 //  console.log('Can train with model Id: ', modelId_test);
 
-const addAdmin = function() {
+const addAdmin = function(images) {
 
   // combine pos and neg results for admin
-  const allImages = (adminImages.map(i => convertToInput(i, [ADMIN_CONCEPT, NOT_KID_CONCEPT], true))).concat(kidImages.map(i => convertToInput(i, [KID_CONCEPT, NOT_ADMIN_CONCEPT], false)));
-  console.log("Number of images to process: " + allImages.length);
+  // const allImages = (adminImages.map(i => convertToInput(i, [ADMIN_CONCEPT, NOT_KID_CONCEPT], true))).concat(kidImages.map(i => convertToInput(i, [KID_CONCEPT, NOT_ADMIN_CONCEPT], false)));
+  console.log("Number of images to process: " + images.length);
 
   // upload starting images to clarify
-  uploadInputs(allImages);
+  uploadInputs(images);
 }
 
 const identify = (picUrl) => {
   console.log('identifying with id:', modelId, 'and version id:', modelVersionId);
     // Predict the contents of an image by passing in a URL.
-    if (modelId && modelVersionId) {
-      app.models.predict({id:modelId}, {version:modelVersionId}, picUrl)
-      .then(response => {
-          console.log(response);
-          return response.outputs[0].data.concepts[0].id;
-      })
-      .catch(err => {
-          console.log(err);
-          return undefined;
-      });
-    }
+    // if (modelId && modelVersionId) {
+      // app.models.predict({id:"admin"}, {version:"f58ab60b215447178e1ceb9470019252"}, picUrl)
+      // .then(response => {
+      //     console.log(response);
+      //     return response.outputs[0].data.concepts[0].id;
+      // })
+      // .catch(err => {
+      //     console.log(err);
+      //     return undefined;
+      // });
+
+      axios.post("https://api.clarifai.com/v2/models/admin", {}, {
+        headers: {
+          "Authorization": "Key " + KEY,
+          "Content-Type": "application/json",
+          'Access-Control-Allow-Origin': '*'
+        }
+      }).then((res)=>{console.log('good:', res)}).catch((err)=>{console.log('bad:', err)});
+    // }
 }
 
 module.exports = {

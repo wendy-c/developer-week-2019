@@ -8,8 +8,7 @@ const u2f = require('u2f');
 const bodyParser = require('body-parser');
 const identify = require('./identify').identify;
 const addAdmin = require('./identify').addAdmin;
-
-
+const adult = require("./adult.json");
 const docusign = require('docusign-esign');
 const docusignClient = new docusign.ApiClient();
 
@@ -26,11 +25,6 @@ app.use(bodyParser.urlencoded({
 app.enable('trust proxy')
 
 app.get('/getdata', async (req, res) => {
-});
-
-app.post('/facepassport', (req, res) => {
-  console.log(req.body);
-  res.send(req.body);
 });
 
 app.get('/ping', (req, res) => {
@@ -164,23 +158,29 @@ app.get('/signdoc', function(req, res) {
 
 let images = [];
 
-app.get('/concatImages', function(req,res) {
-  if (images.length === 10) {
+app.post('/facepassport', function(req,res) {
+  console.log(req.body);
+  res.send(req.body);
+  if (images.length === 5) {
     redirect('/who/admin');
   } else {
-    const image = req.query.base64Img
+    const image = req.body;
     images.push(image);
   }
 })
 
 // add admin to system
 app.get('/who/admin', function(req, res) {
-  addAdmin();
+  addAdmin(images);
 });
 
 app.get('/who/you', function(req, res) {
   console.log("identifying..."); 
-  identify('./IMG_8810.JPG');
+  const kid = "https://www.healthykids.org/_img2017/kid05.jpg";
+  // kid
+  identify(kid);
+  // adult
+  // identify(adult);
 });
 
 app.get('/', function (_req, res) {
