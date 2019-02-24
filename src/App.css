@@ -41,6 +41,10 @@ button {
   height: 480px;
 }
 
+#camera > div > video {
+  left: 0;
+}
+
 .login-form label {
   margin: 15px 0;
   display: flex;

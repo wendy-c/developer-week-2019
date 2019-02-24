@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AgoraRTC from 'agora-rtc-sdk';
 
 const cameraVideoProfile = '480p_2'; // 640 × 480 @ 30fps  & 750kbs
