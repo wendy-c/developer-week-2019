@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import Auth from './Auth';
 
 class Login extends Component {
   state = {
