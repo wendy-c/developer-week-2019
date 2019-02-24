@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import './App.css';
 
-import Login from './Login';
-import Signup from './Signup';
-import KeySetup from './KeySetup';
-import Auth from './Auth'
-import Dashboard from './Dashboard';
-import WhiteList from './WhiteList';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import KeySetup from './components/KeySetup';
+import Auth from './components/Auth'
+import Dashboard from './components/Dashboard';
+import WhiteList from './components/WhiteList';
 
 class App extends Component {
 
