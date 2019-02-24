@@ -27,6 +27,10 @@ app.enable('trust proxy')
 app.get('/getdata', async (req, res) => {
 });
 
+app.post('/facepassport', (req, res) => {
+  res.send(req.body);
+});
+
 app.get('/ping', (req, res) => {
   res.send('pong')
 })
