@@ -6,16 +6,20 @@ class KeySetup extends Component {
   }
 
   render() {
-    return <div>
-      <h1>Confirmation</h1>
-      <div>
-        Name: {this.props.match.params.name}
+    return (
+      <div className="page-header">
+        <div className="page-header__container">
+          <span>
+            Your Name: <b>{this.props.match.params.name}</b>
+          </span>
+          <span>
+            Your Email: <b>{this.props.match.params.email}</b>
+          </span>
+          <h3>Now, it's time to set up your key.</h3>
+          <button handleClick={this.handleClick}>Set up key</button>
+        </div>
       </div>
-      <div>
-        Email: {this.props.match.params.email}
-      </div>
-      <button handleClick={this.handleClick}>Setup key</button>
-    </div>
+    )
   }
 }
 
