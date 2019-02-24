@@ -120,3 +120,63 @@ button {
 .page-header__container span {
   margin: 10px 0;
 }
+
+.whitelist {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.whitelist__item {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.whitelist__item span {
+  margin: 5px 0;
+}
+
+.whitelist__item i {
+  color: #DB3737;
+}
+
+.whitelist__form {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  max-width: 500px;
+  border: 2px solid #CED9E0;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 30px;
+  font-size: 20px;
+}
+
+.whitelist__form label {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.whitelist__form input {
+  width: 300px;
+}
+
+.whitelist__form button {
+  width: 50px;
+  font-size: 16px;
+  background-color: #F2B824;
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  align-self: flex-end;
+  font-size: 20px;
+  margin: 10px 0 0;
+}
+
+.whitelist__url {
+  display: flex;
+  justify-content: space-between;
+}
