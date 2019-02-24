@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { initClientAndJoinChannel, createBase64Arr } from './helpers';
+import { initClientAndJoinChannel, createBase64Arr, takepicture } from './helpers';
 import { appID, channel } from './constants';
 import axios from 'axios';
 
@@ -32,10 +32,11 @@ export default class Auth extends Component {
         });
     }
 
-    handleClick(e) {
-        e.preventDefault();
-        
-    }
+    // handleClick(e) {
+    //     e.preventDefault();
+    //     takepicture()
+
+    // }
     render() {
         return (
             <div className="Auth">

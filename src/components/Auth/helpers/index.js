@@ -50,12 +50,13 @@ function createCameraStream(uid) {
     var grandchild = child.children[0];
     grandchild['crossOrigin'] = "anonymous";
     vid = grandchild;
+    return grandchild;
   }, function (err) {
     console.log("[ERROR] : getUserMedia failed", err);
   });
 }
 
-function takepicture(video) {
+export function takepicture(video) {
     var context = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
