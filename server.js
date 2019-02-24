@@ -196,36 +196,33 @@ https.createServer({
   console.log('HTTPS listening on port 1989! Go to https://localhost:1989/')
 })
 
-var users = {};
-var sessions = {};
+var users = [{}];
+var sessions = [{}];
 
 const APP_ID = 'https://localhost:1989';
 app.get('/api/register_req',(req, res)=>{
   var authRequest = u2f.request(APP_ID);
-  var session = JSON.stringify(authRequest);
+  var session = authRequest;
   app.set('session', session);
   res.send(session);
 });
 
 app.get('/api/sign_req', (req, res)=>{
-  var authRequest = u2f.request(APP_ID, Users[0].keyHandle);
-  // Sessions[req.cookies.userid] = { authRequest: authRequest };
+  var authRequest = u2f.request(APP_ID, users[0].keyHandle);
+  sessions[0] = { authRequest: authRequest };
   res.send(JSON.stringify(authRequest));
 });
 
 app.post('/api/register', (req, res) =>{
-  console.log(req.body);
-  console.log(req.query);
-  console.log(req.data);
-  console.log(res.body);
-  console.log(res.query);
-  console.log(res.data);
-
-  var registration = u2f.checkRegistration(JSON.parse(app.get("session")), req.body.registrationResponse);
+  console.log(req.body)
+  var registration = u2f.checkRegistration(app.get('session'), req.body);
+  console.log(registration);
   if(!registration.successful) {
     console.log(registration.errorMessage);
     return res.status(500).send({ message: "error" });
   }
+  users[0].publicKey= res.publicKey;
+  users[0].keyHandle = res.keyHandle;
   res.send(registration);
 });
 
