@@ -1,25 +1,30 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
 import {register, sign} from 'u2f-api';
+
+// const session = window.sessionStorage;
 
 class Login extends Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    redirect: false
   }
 
   handleSubmit = event => {
     event.preventDefault();
 
     // TODO: Send this.state.username and this.state.password to the server to authenticate user
-
+    sessionStorage.setItem('user_permission', 'admin')
+    this.setState({redirect: true, type: 'login'})
   }
 
   handleChange = event => {
     this.setState({[event.target.name]: event.target.value})
   }
   handleClick = event => {
+    /*
     axios.get('https://localhost:1989/api/register_req').then(response =>{
       console.log('click res: ', response.data);
       register(response.data).then(res=> {
@@ -40,9 +45,13 @@ class Login extends Component {
           console.log('register err');
         });
       });
+      */
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/facepassport/login"/>
+    }
     return (
       <div className="App">
         <header className="App-header">
