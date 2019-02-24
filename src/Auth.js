@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AgoraRTC from 'agora-rtc-sdk';
+import dotenv from "dotenv";
+dotenv.config();
 
 const cameraVideoProfile = '480p_2'; // 640 × 480 @ 30fps  & 750kbs
-const appID = 'e98b454d6cf942f792c53ec2d39b79a3';
+const appID = process.env.REACT_APP_AGORA_API;
 const channel = 'test';
 const localStreams = {
   camera: {
@@ -19,7 +21,6 @@ const client = AgoraRTC.createClient({mode: 'live', codec: "h264"});
 
 function initClientAndJoinChannel(agoraAppId, channelName) {
   client.init(agoraAppId, function () {
-    console.log("AgoraRTC client initialized");
     joinChannel(channelName);
   }, function (err) {
     console.log("[ERROR] : AgoraRTC client init failed", err);
@@ -30,7 +31,6 @@ function joinChannel(channelName) {
   const token = null;
   const userID = null;
   client.join(token, channelName, userID, function(uid) {
-      console.log("User " + uid + " join channel successfully");
       createCameraStream(uid);
       localStreams.camera.id = uid; 
   }, function(err) {
@@ -47,7 +47,6 @@ function createCameraStream(uid) {
   });
   localStream.setVideoProfile(cameraVideoProfile);
   localStream.init(function() {
-    console.log("getUserMedia successfully");
     localStream.play('camera'); // play the given stream within the local-video div id name
     console.log("you're on camera!");
   }, function (err) {
