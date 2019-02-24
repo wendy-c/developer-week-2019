@@ -5,7 +5,7 @@ import './App.css';
 import Login from './Login';
 import Signup from './Signup';
 import KeySetup from './KeySetup';
-import Auth from './Auth'
+import Auth from './components/Auth'
 
 class App extends Component {
 
