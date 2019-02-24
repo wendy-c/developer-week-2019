@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { initClientAndJoinChannel, createBase64Arr } from './helpers';
+import { initClientAndJoinChannel, createBase64Arr, takepicture } from './helpers';
 import { appID, channel } from './constants';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
@@ -45,6 +45,12 @@ export default class Auth extends Component {
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
     }
+
+    // handleClick(e) {
+    //     e.preventDefault();
+    //     takepicture()
+
+    // }
     render() {
         if (this.state.redirect) {
             return <Redirect to="/dashboard"/>

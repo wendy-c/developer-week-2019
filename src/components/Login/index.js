@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {Link, Redirect} from 'react-router-dom';
 import axios from 'axios';
-import {sign} from 'u2f-api';
+import {register, sign} from 'u2f-api';
+
 
 // const session = window.sessionStorage;
 
