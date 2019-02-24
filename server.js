@@ -4,7 +4,8 @@ const cors = require('cors');
 const axios = require('axios');
 var fs = require('fs');
 var https = require('https');
-const identify = require('./identify');
+const identify = require('./identify').identify;
+const addAdmin = require('./identify').addAdmin;
 
 require('dotenv').config();
 
@@ -22,8 +23,8 @@ app.get('/ping', function(req, res) {
 })
 
 // identify who is currently watching
-app.get('/who', function(req, res) {
-    identify('');
+app.get('/who/admin', function(req, res) {
+  addAdmin('./data.json');
 });
 
 app.get('/', function (_req, res) {
