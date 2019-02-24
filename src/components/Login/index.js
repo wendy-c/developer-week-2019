@@ -54,7 +54,7 @@ class Login extends Component {
           <label>
           Password <input name="password" value={this.state.password} onChange={this.handleChange}/>
           </label>
-          <button>Login</button>
+          <button onClick={this.handleAuth}>Login</button>
         </form>
         or <Link to="/signup">Signup</Link>
         </header>
