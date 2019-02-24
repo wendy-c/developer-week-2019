@@ -3,7 +3,8 @@ import AgoraRTC from 'agora-rtc-sdk';
 import dotenv from "dotenv";
 dotenv.config();
 
-const cameraVideoProfile = '480p_2'; // 640 × 480 @ 30fps  & 750kbs
+// see https://docs.agora.io/en/Interactive%20Broadcast/API%20Reference/web/interfaces/agorartc.stream.html#setvideoprofile
+const cameraVideoProfile = '480p_2';
 const appID = process.env.REACT_APP_AGORA_API;
 const channel = 'test';
 const localStreams = {
