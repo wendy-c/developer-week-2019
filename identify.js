@@ -3,7 +3,7 @@ const fs = require('fs');
 const kidImages = require('./kid_data.json');
 // get API key
 require('dotenv').config();
-const key = process.env.CLARIFAI_API_KEY;
+const KEY = process.env.CLARIFAI_API_KEY;
 
 // TODO: change path to a file admin_data.json
 const ADMIN_JPG_DIR = './test_pos_data/'; // './admin_data.json'
@@ -28,6 +28,9 @@ const NOT_KID_CONCEPT = {
   id: 'Kid',
   value: false
 }
+
+var modelVersionId = '';
+var modelId = '';
 
 const readFile = function(dirPath) {
   return fs.readdirSync(dirPath).map((file) => {
@@ -55,7 +58,7 @@ const convertToInput = function(input, concepts, isBase64) {
 const adminImages = readFile(ADMIN_JPG_DIR);
 
 // Instantiate a new Clarifai app by passing in your API key.
-const app = new Clarifai.App({apiKey: key});  
+const app = new Clarifai.App({apiKey: KEY});  
 
 const uploadInputs = function(inputs) {
   for(let index = 0; index < inputs.length; index += BATCH_SIZE){
@@ -70,12 +73,46 @@ const uploadInputs = function(inputs) {
     // REQUIRED for Visual Search or Custom Training
     app.inputs.create(imageList).then(
       // Success
-      (response) => { console.log('Uploaded initial inputs:', response) },
+      (response) => { 
+        console.log('Uploaded initial inputs:', response);
+        // create model
+        app.models.create(
+          "admin",
+          [
+            { "id": "Admin" },
+            { "id": "Kid" }
+          ]
+        ).then(
+          function(response) {
+            console.log('Created model:', response);
+            modelId = response.model.id;
+
+            // train model
+            app.models.train(JSON.stringify({model_id: modelId})).then(
+              function(response) {
+                // do something with response
+                console.log('Trained:', response);
+                modelVersionId = response.model.model_version.id;
+              },
+              function(err) {
+                // there was an error
+                console.log('Error in training:', err);
+                return undefined;
+              }
+            )
+          },
+          function(err) {
+            console.log('Error creating model:', err);
+            return undefined;
+          }
+        );
+      },
       // Error
       (error) => { console.error('Error in uploading initial inputs:', error) }
     )
   }
 }
+//  console.log('Can train with model Id: ', modelId_test);
 
 const addAdmin = function() {
 
@@ -85,44 +122,22 @@ const addAdmin = function() {
 
   // upload starting images to clarify
   uploadInputs(allImages);
-
-  // create model for admin
-  app.models.create(
-    "admin",
-    [
-      { "id": "admin" }
-    ]
-  ).then(
-    function(response) {
-      console.log('Created model:', response);
-      // train the model
-      app.models.train("{model_id:admin}").then(
-        function(response) {
-          // do something with response
-          console.log('Trained:', response);
-        },
-        function(err) {
-          // there was an error
-          console.log('Error in training:', err);
-        }
-      );
-    },
-    function(err) {
-      console.log('Error creating model:', err);
-    }
-  );
-  
 }
 
 const identify = (picUrl) => {
+  console.log('identifying with id:', modelId, 'and version id:', modelVersionId);
     // Predict the contents of an image by passing in a URL.
-    app.models.predict(Clarifai.GENERAL_MODEL, picUrl)
-    .then(response => {
-        console.log(response);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+    if (modelId && modelVersionId) {
+      app.models.predict({id:modelId}, {version:modelVersionId}, picUrl)
+      .then(response => {
+          console.log(response);
+          return response.outputs[0].data.concepts[0].id;
+      })
+      .catch(err => {
+          console.log(err);
+          return undefined;
+      });
+    }
 }
 
 module.exports = {

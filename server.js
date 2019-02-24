@@ -150,9 +150,25 @@ app.get('/signdoc', function(req, res) {
 
 })
 
-// identify who is currently watching
+let images = [];
+
+app.get('/concatImages', function(req,res) {
+  if (images.length === 10) {
+    redirect('/who/admin');
+  } else {
+    const image = req.query.base64Img
+    images.push(image);
+  }
+})
+
+// add admin to system
 app.get('/who/admin', function(req, res) {
   addAdmin();
+});
+
+app.get('/who/you', function(req, res) {
+  console.log("identifying..."); 
+  identify('./IMG_8810.JPG');
 });
 
 app.get('/', function (_req, res) {
